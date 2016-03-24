@@ -1,0 +1,45 @@
+<div class="position">
+  <i class="fa fa-chevron-up" ng-click="shiftUp({index:index})"></i>
+  <i class="fa fa-chevron-down" ng-click="shiftDown({index:index})"></i>
+  <i class="fa fa-times" ng-click="remove({index:index})"></i>
+</div>
+<div class="content">
+  <div class="content-regular" ng-if="obj.type==='Regular'">
+    <input class="cell-title form-control" type="input" name="cell_title" ng-model="obj.title" /><i class="fa fa-angle-down"></i>
+    <input class="cell-content form-control" type="input" name="cell_content" ng-model="obj.content" />
+  </div>
+  <div class="content-image" ng-if="obj.type==='Featured Image'">
+    <span>Image</span>
+    <select ng-model="obj.image" class="cell-image form-control" name="cell_content">
+      <option>Full</option>
+      <option>Large</option>
+      <option>Medium</option>
+      <option>Small</option>
+      <option>Custom</option>
+    </select>
+  </div>
+  <div class="content-template-file" ng-if="obj.type==='Template File'">
+    <input class="cell-template-file form-control" placeholder="template-name.php" type="input" name="cell_template_file" ng-model="obj.template_file" />
+    <a class="template-help" href="#" title="help" ng-click="obj.templateHelp = !obj.templateHelp" ng-class="{close: !obj.templateHelp}">
+      <i class="fa fa-question-circle"></i>
+    </a>
+    <span ng-if="obj.templateHelp">There are preset templates available in this plugin's templates folder. You can copy and customize them, then place them in the root folder of your theme/child theme to access them above.</span>
+  </div>
+
+</div>
+<div class="other">
+  <b>Type:</b>
+  <select ng-model="obj.type" class="cell-type form-control">
+    <option>Regular</option>
+    <option>Featured Image</option>
+    <option>Template File</option>
+  </select>
+  <div class="clear"></div>
+  <span ng-if="obj.type==='Regular'">
+    <b>Tags:</b>
+    <span class="tag">((post_title))</span>
+    <span class="tag">((excerpt | length))</span>
+    <span class="tag">((link | read-more-text))</span>
+    <span class="tag">((meta_key | length))</span>
+  </span>
+</div>
