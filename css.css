@@ -86,14 +86,14 @@ cell input.form-control.cell-content{
 
 .template-help{
   position: absolute;
-  top: 8px;
-  right: 7px;
+  top: 4px;
+  right: 8px;
   opacity: 1;
   color: inherit!important;
   font-size: 20px;
 }
 
-.template-help.close{
+.template-help.close-template-help{
   opacity: .5;
 }
 
@@ -218,22 +218,26 @@ addcell .btn i{
 .database.table .table{
   background: transparent;
   border-color: transparent;
-
+  margin-bottom: 0;
 }
 
-.database.table .table .table td, 
+.database.table .table .table{
+  margin-bottom: 10px;
+}
+
+.database.table .table .table td,
 .taxonomy-table tr:first-child td{
   border: none!important;
-  
+
 }
 
 .database.table td+td{
   padding: 0;
-  
-}
 
+}
 
 textarea.shortcode{
   width: 600px;
   max-width: 100%;
+  min-height: 200px;
 }

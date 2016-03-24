@@ -31,15 +31,21 @@ app.controller("MainCtrl", ['$scope', function($scope){
   }
 
   this.shiftCellUp = function(index){
+    console.log(index);
     if(index < 1) return;
     var obj = this.cells.splice(index, 1);
     this.cells.splice(index-1, 0, obj[0]);
   }
 
   this.shiftCellDown = function(index){
+    console.log(index);
     if(index >= this.cells.length) return;
     var obj = this.cells.splice(index, 1);
     this.cells.splice(parseInt(index)+1, 0, obj[0]);
+  }
+
+  this.cons = function(){
+    console.log('working!');
   }
 
   // responsiveness
@@ -53,7 +59,7 @@ app.controller("MainCtrl", ['$scope', function($scope){
   // posts
   this.posts = {
     'post_type': ['news'],
-        'posts_per_page': '10',
+    'posts_per_page': '10',
     'query_vars': '',
     'taxonomy': 'category',
     'terms': ['uncategorized']
@@ -61,8 +67,7 @@ app.controller("MainCtrl", ['$scope', function($scope){
 
   // database
   this.database = {
-    post_type: {
-
+    'post_type': {
       'news': {
         'label': 'News',
         'taxonomy': {
@@ -128,22 +133,28 @@ app.controller("MainCtrl", ['$scope', function($scope){
           }
         }
       }
-
     }
   }
 
-  this.id_base = "eap_";
-  this.id_num = 0;
-  this.id = "";
-
-  this.get_id = function(){
-    return this.id;
+  this.cons = function(){
+    console.log('digested');
   }
 
-  this.set_id = function(){
-    // this.id = this.id_base + (++(parseInt(this.id_num)));
-    // this.get_id();
-    this.id = 'abc';
+  // need to generate unique ids for html elements
+  var html_id_base = "eap_id_",
+      html_id_num = 0,
+      html_id = "";
+  this.html_id = 1;
+  this.get_html_id = function(){
+    return 'html_id';
+//    return html_id;
+  }
+
+  this.set_html_id = function(){
+    html_id_num = parseInt(html_id_num) + 1;
+    html_id = html_id_base + html_id_num;
+    return html_id;
+    // return html_id;
   }
 
   // shortcode
@@ -153,36 +164,4 @@ app.controller("MainCtrl", ['$scope', function($scope){
     return '[eap]'+ JSON.stringify(sc_obj) +'[/eap]';
   }
 
-
-
 }] );
-
-app.directive("cell", function(){
-  return {
-    restrict: 'E',
-    templateUrl: 'templates/cell.html',
-    scope: {
-      'obj': '=',
-      'shiftUp': '&',
-      'shiftDown': '&',
-      'remove': '&',
-      'index': '@',
-    },
-    link: function(scope, element, attrs){
-
-    }
-  };
-});
-
-app.directive("addcell", function(){
-  return {
-    restrict: 'E',
-    templateUrl: 'templates/add-cell.html',
-    scope: {
-      'add': '&'
-    },
-    link: function(scope, element, attrs){
-
-    }
-  };
-});
