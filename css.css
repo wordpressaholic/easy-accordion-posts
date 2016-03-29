@@ -1,0 +1,243 @@
+editor {
+  max-width: 100%;
+  min-height: 400px;
+  background: #eee;
+  padding: 40px;
+  margin: 40px;
+  display: block;
+  font-family: 'open sans';
+}
+
+
+.section{
+  margin-bottom: 30px;
+}
+
+.section>h2{
+  font-family: montserrat;
+  display: inline-block;
+  width: 100%;
+}
+
+.divider {
+  border-top: 3px solid #F5F5F5;
+  border-bottom: 3px solid #E6E6E6;
+  border-radius: 10px;
+  width: 100%;
+  margin-top: 7px;
+}
+
+cell{
+  display: block;
+  margin-bottom: 20px;
+  padding-left: 40px;
+  position: relative;
+  clear: both;
+  min-height: 70px;
+}
+
+cell:after{
+  content: ' ';
+  display: block;
+  clear: both;
+}
+
+cell input.form-control{
+  max-width: 300px;
+  font-size: 12px;
+  color: #777;
+  margin-bottom: 3px;
+  display: inline-block;
+}
+
+cell input.form-control.cell-title{
+  border-radius: 7px 7px 0 0;
+  padding-right: 40px;
+}
+
+cell input.form-control.cell-content{
+  border-radius: 0 0 7px 7px;
+}
+
+.cell-title+i{
+  color: #ECECEC;
+  position: absolute;
+  right: 4px;
+  top: 4px;
+  font-size: 16px;
+  border-left: 1px solid;
+  padding: 6px 10px;
+  background: white;
+}
+
+.cell-template-file-box{
+  display: inline;
+}
+
+.content-template-file{
+  position: relative;
+}
+
+.content-template-file span{
+  display: block;
+  padding-top: 5px;
+  font-size: 13px;
+}
+
+.template-help{
+  position: absolute;
+  top: 4px;
+  right: 8px;
+  opacity: 1;
+  color: inherit!important;
+  font-size: 20px;
+}
+
+.template-help.close-template-help{
+  opacity: .5;
+}
+
+cell input.form-control.cell-template-file{
+  margin: 0;
+}
+
+.position{
+  width: 40px;
+  display: block;
+  text-align: center;
+  position: absolute;
+  left: 0;
+  font-size: 18px;
+  padding-top: 2px;
+}
+
+.position i{
+  padding: 2px;
+  cursor: pointer;
+}
+
+.position i.fa-times{
+    color: rgb(216, 106, 103);
+}
+
+.content{
+  float: left;
+  margin-right: 20px;
+  width: 250px;
+  position: relative;
+}
+
+.other{
+  line-height: 33px;
+  display: inline-block;
+  width: 600px;
+}
+
+cell b{
+  margin-right: 10px;
+  display: inline-block;
+}
+
+.other span{
+}
+
+.other .cell-type{
+  max-width: 150px;
+  font-family: inherit;
+  font-size: 12px;
+  display: inline-block;
+}
+
+.other b+span.tag{
+  margin-left: 7px;
+}
+
+.other span.tag{
+  margin: 0;
+  padding: 0 4px;
+  background: #9C9C9C;
+  display: inline-block;
+  line-height: 1.5em;
+  font-size: 13px;
+  color: white;
+}
+
+.relationship-indicator{
+  margin-left: 4px;
+  margin-right: 2px;
+}
+
+addcell{
+  padding-left: 40px;
+}
+
+addcell .btn i{
+  margin-right: 5px;
+}
+
+.content-image{
+  height: 120px;
+  width: 100%;
+  background: #ddd;
+  position: relative;
+  text-align: center;
+}
+
+.content-image>span{
+  display:block;
+  font-size: 20px;
+  text-transform: uppercase;
+  font-weight: bold;
+  color: #bbb;
+  padding: 25px 10px 5px;
+}
+
+.cell-image{
+  width: 100px;
+  display: inline-block;
+  text-align: center;
+  font-size: 12px;
+}
+
+.responsiveness-table{
+  max-width: 600px;
+}
+
+.responsiveness-table input{
+  max-width: 100px;
+}
+
+.database.table{
+  max-width: 600px;
+}
+
+.database.table th{
+  text-align: left;
+}
+
+.database.table .table{
+  background: transparent;
+  border-color: transparent;
+  margin-bottom: 0;
+}
+
+.database.table .table .table{
+  margin-bottom: 10px;
+}
+
+.database.table .table .table td,
+.taxonomy-table tr:first-child td{
+  border: none!important;
+
+}
+
+.database.table td+td{
+  padding: 0;
+
+}
+
+textarea.shortcode{
+  width: 600px;
+  max-width: 100%;
+  min-height: 200px;
+}
