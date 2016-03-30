@@ -3,13 +3,13 @@
 jQuery( function( $ ){
 
 	// slide Toggle
-	//-- define listner
+	//-- define event listener
 	function eapSlideToggle( ){
 		var $this = $( this );
 		if( ! $this.parent( ).hasClass( 'eap_no_content' ) )
 			$this.siblings( '.eap_content' ).stop( ).slideToggle( ).parent( ).toggleClass('eap_open');
 	}
-	//-- bind listner
+	//-- bind event listener
 	$( 'body' ).on( 'click', '.eap_title', eapSlideToggle );
 
 

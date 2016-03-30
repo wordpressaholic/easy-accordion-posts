@@ -122,33 +122,47 @@ class Easy_Accordion_Posts_Public {
 		$content = html_entity_decode( $content );
 		$content = str_replace(array('”', '“', '″'), '"', $content);
 		$args = json_decode( $content, true );
+		$atts = shortcode_atts( array(
+		    'query' => false,
+		), $atts );
 
-		// build query args
-		$query_args = array(
-			'posts_per_page' => ! empty( $args['query']['posts_per_page'] ) ? $args['query']['posts_per_page'] : 10,
-			'post_type' => array(),
-			'tax_query' => array(
-				'relation' => 'AND',
-			),
-		);
-		if( ! empty( $args['database']['post_type'] ) ){
-			foreach($args['database']['post_type'] as $post_type_name => $post_type_obj){
-				$query_args['post_type'][] = $post_type_name;
-				foreach($post_type_obj['taxonomy'] as $taxonomy_name => $taxonomy_obj){
-					$tax_arr = array(
-						'taxonomy' => $taxonomy_name,
-						'field'    => 'term_id',
-						'terms'    => array(),
-					);
-					foreach($taxonomy_obj['terms'] as $term_id => $term_obj){
-						$tax_arr['terms'][] = $term_id;
-					}
-					$query_args['tax_query'][] = $tax_arr;
+		if( $atts[ 'query' ] ){
+			$atts[ 'query' ] = ltrim( $atts[ 'query' ], "$" );
+			foreach( $GLOBALS as $var_name => $value ){
+				if ($var_name === $atts[ 'query' ]) {
+					$query_args = $value;
 				}
 			}
-		} else {
-			unset($query_args[ 'post_type' ]);
-			unset($query_args[ 'tax_query' ]);
+		}
+
+		// build query args
+		if( empty( $query_args ) ){
+			$query_args = array(
+				'posts_per_page' => ! empty( $args['query']['posts_per_page'] ) ? $args['query']['posts_per_page'] : 10,
+				'post_type' => array(),
+				'tax_query' => array(
+					'relation' => 'AND',
+				),
+			);
+			if( ! empty( $args['database']['post_type'] ) ){
+				foreach($args['database']['post_type'] as $post_type_name => $post_type_obj){
+					$query_args['post_type'][] = $post_type_name;
+					foreach($post_type_obj['taxonomy'] as $taxonomy_name => $taxonomy_obj){
+						$tax_arr = array(
+							'taxonomy' => $taxonomy_name,
+							'field'    => 'term_id',
+							'terms'    => array(),
+						);
+						foreach($taxonomy_obj['terms'] as $term_id => $term_obj){
+							$tax_arr['terms'][] = $term_id;
+						}
+						$query_args['tax_query'][] = $tax_arr;
+					}
+				}
+			} else {
+				unset($query_args[ 'post_type' ]);
+				unset($query_args[ 'tax_query' ]);
+			}
 		}
 
 		// perform query loop
@@ -196,7 +210,7 @@ class Easy_Accordion_Posts_Public {
 						switch ($cell['type']){
 							case 'Regular':
 								// process tags
-								$tags = array( 'post_title', 'excerpt', 'featured_image', 'link', 'meta_key' );
+								$tags = array( 'post_title', 'excerpt', 'content', 'featured_image', 'link', 'custom_field' );
 
 								//-- cell title element
 								if( ! empty( $cell['title'] ) ){
@@ -209,7 +223,7 @@ class Easy_Accordion_Posts_Public {
 								//-- cell content element
 								if( ! empty( $cell['content'] ) ){
 									foreach( $tags as $tag ){
-										$cell['content'] = preg_replace_callback( '/(\(\(\s*'. $tag .'[^\)\)]+\)\))/', array( $this, 'replace_callback_' . $tag ), $cell['content']);
+										$cell['content'] = preg_replace_callback( '/(\(\(\s*'. $tag .'[^\)\)]*\)\))/', array( $this, 'replace_callback_' . $tag ), $cell['content']);
 									}
 									echo '<div class="eap_content" style="'. ( $pre_open_class ? " display: block; " : "" ) .'">' . $cell['content'] . '</div>';
 								}
@@ -239,7 +253,7 @@ class Easy_Accordion_Posts_Public {
   // replaces post_title
   function replace_callback_post_title( $matches ){
     $defaults = array(
-      'max_length'=> '25',
+      'max_length'=> '85',
       'append'=> '...',
     );
     $title_args = $this->args_splitter( $matches[0], $defaults );
@@ -279,6 +293,32 @@ class Easy_Accordion_Posts_Public {
 
   }
 
+	// replaces excerpt
+  function replace_callback_content( $matches ){
+    $defaults = array(
+      'max_length'=> '5000',
+      'append'=> '...',
+			'strip_tags'=> false
+    );
+    $content_args = $this->args_splitter( $matches[0], $defaults );
+		$content = get_the_content( );
+
+		if($content_args['strip_tags'] !== false)
+			$content = wp_strip_all_tags( $content );
+
+		// max length
+		$content_exploded = str_split( $content );
+		if( count( $content_exploded ) > ( int )$content_args[ 'max_length' ] ){
+			$content = substr( $content, 0, ( int )$content_args[ 'max_length' ] );
+			// append
+			if( ! empty( $content_args[ 'append' ] ) ){
+				$content .= $content_args[ 'append' ];
+			}
+		}
+    return $content;
+
+  }
+
 	// replaces link
   function replace_callback_featured_image( $matches ){
     $defaults = array(
@@ -297,8 +337,8 @@ class Easy_Accordion_Posts_Public {
     return '<a href="'. get_the_permalink() .'">'. $link_args['text'] .'</a>';
   }
 
-	// replaces meta_key
-  function replace_callback_meta_key( $matches ){
+	// replaces custom_field
+  function replace_callback_custom_field( $matches ){
     $defaults = array(
       'max_length'=> '25',
       'append'=> '...',

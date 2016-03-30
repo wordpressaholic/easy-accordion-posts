@@ -1,6 +1,6 @@
 .eap_grid{
   text-align: center;
-  margin: 10px 0 30px;
+  margin: 10px -5px 30px;
 }
 
 .eap_title{
@@ -8,7 +8,7 @@
   font-weight: bold;
   position: relative;
   padding: 5px;
-  line-height: 1em;
+  line-height: 1.3em;
 }
 
 .eap_title:after{

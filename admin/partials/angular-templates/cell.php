@@ -50,9 +50,10 @@
     <b><?php _e('Tags', 'easy-accordion-posts') ?>:</b>
     <span class="tag">((post_title | max_length: 20 | append:...))</span>
     <span class="tag">((excerpt | max_length: 135 | append:...))</span>
+    <span class="tag">((content | max_length: 800 | append:... | strip_tags: true ))</span>
     <span class="tag">((link | text: know more))</span>
     <span class="tag">((featured_image | size: Medium))</span>
-    <span class="tag">((meta_key | key: review | max_length: 50 | append:...))</span>
+    <span class="tag">((custom_field | key: review | max_length: 50 | append:...))</span>
   </span>
   <div class="clear"></div>
 </div>
